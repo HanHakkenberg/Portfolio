@@ -13,8 +13,12 @@ public class PathfindingGrid : MonoBehaviour{
     NodePos targetNode, myNode;
     public int maxTravelDistance;
 
-    //Creating the grid
 	void Awake(){
+        CreatGrid();
+	}
+
+    //Creating the grid
+    void CreatGrid() {
         Pathfinder = this;
         grid = new Node[gridSizeX, gridSizeY];
         for(int x = 0; x < gridSizeX; x++){
@@ -23,7 +27,7 @@ public class PathfindingGrid : MonoBehaviour{
                 grid[x, y] = new Node(newNodePos, !Physics.CheckSphere(newNodePos, nodeSize / 2,2) ,x,y);
             }
         }
-	}
+    }
 
     //converting the given node to a nodepos
     public NodePos checkNode(Vector3 _nodeToCheck){
@@ -101,7 +105,6 @@ public class PathfindingGrid : MonoBehaviour{
             pathList.Add(grid[nodeToAdd.x, nodeToAdd.y].nodeWorldPos);
             nodeToAdd = new NodePos(grid[nodeToAdd.x, nodeToAdd.y].parentNodeX, grid[nodeToAdd.x, nodeToAdd.y].parentNodeY);
         }
-        print("k");
         return (new List<Vector3>());
     }
 
@@ -127,7 +130,6 @@ public class PathfindingGrid : MonoBehaviour{
                         }
                         else if(currentNeighbor.aCost < grid[_currentPos.x + x, _currentPos.y + y].aCost)
                         {
-                            print("b");
                             currentNeighbor.ChangeParent(_currentPos.x, _currentPos.y);
                             grid[_currentPos.x + x, _currentPos.y + y] = currentNeighbor;
                         }
